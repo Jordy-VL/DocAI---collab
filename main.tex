@@ -147,4 +147,56 @@ Get contacts of potential dataset construction collaborators (BCN infographics (
 
 
 
+\section{13-07-2022}
+
+\subsection{Actions}
+
+Defining the perfect, Bayes optimal thing.
+ 
+
+Competition: need both training \& test set \& generalization set - [diversified test-set \& completely different [unseen templates]]
+
+Within domain of real-life [business] documents:
+	\begin{itemize}
+		\item different vendors
+		\item different layouts
+		\item different domains and document types [medical, finance, legal, ...]
+		\item sub-datasets addresses specific layouts/problems [checkboxes in medical; multi-header tables in shipping/literature]
+	\end{itemize}
+
+This will require metadating the documents and building generalization dataset. On the level of questions and templates, not $iid$. Even leave out a whole domain.
+
+X - (in)finite data - synthetic/natural - languages - domains - modalities (image-text-layout) - native/scanned - OCR ground truth 
+
+Y - annotations (complexity dependent on format) - formats [DLA, OCR, KIE] - (harder or easy to gather) - DocQA is easier, only document-level annotations and text-to-text evaluation - postprocessing (different normalization or multiple possible ground truths, e.g., dates in different formats) - annotation scheme complexity (how hierarchical/specific you want to make it; v1 and v2) - annotation layers (token OCR bbox annotation for extractive/generative answers)
+
+\subsection{Obtaining data - sources}
+
+Methodology for data creation. 
+
+\href{https://docs.google.com/spreadsheets/d/152hSv5CBsAeqJCCv81jztb_5rdlwP7mQV5cEh99Lqq4/edit?usp=sharing}{Link to dataset metadata}
+
+Generic DocVQA questions:
+\begin{enumerate}
+	\item document date
+	\item ...
+\end{enumerate}
+
+Domain questions;
+\begin{enumerate}
+	\item amount-based entity questions in finance documents
+	\item table statistic in research document
+\end{enumerate}
+
+\subsubsection{Exercise on data set choice}
+
+Initial trial-and-error: is the dataset source challenging and quite good?
+Go through TILT model as a baseline. T5 + layout
+
+1. how I will easily create those? 
+
+Limited layout diversity in consumer food product images.
+
+
+
 \end{document}
