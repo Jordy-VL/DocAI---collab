@@ -193,10 +193,51 @@ Domain questions;
 Initial trial-and-error: is the dataset source challenging and quite good?
 Go through TILT model as a baseline. T5 + layout
 
-1. how I will easily create those? 
+1. how will we easily create those? 
 
 Limited layout diversity in consumer food product images.
 
+
+\section{19-07-2022}
+
+\begin{enumerate}
+	\item Data sources
+	\item Challenges in creating challenging benchmarks: annotation building
+	\begin{enumerate}
+		\item modalities (text, layout, image)
+		\item inference structure / answer complexity (single answer, table, cell within table; sum over cells)
+		\item question complexity (abstractive/extractive; mathematical operations)
+		\item context helpful to understand layout (give some coordination: first row of 2nd table on the page 1) $\to$ keywords should help
+		\begin{itemize}
+			\item true layout understanding and navigation
+			\item absolute \& relative questions
+			\item require ground truth layout, might come from generative process 
+		\end{itemize}
+	\end{enumerate}
+\end{enumerate}
+
+Important references:
+\begin{itemize}
+	\item \href{https://openreview.net/pdf/f3dad930cb55abce99a229e35cc131a2db791b66.pdf}{MULTIMODALQA: COMPLEX QUESTION ANSWERING
+		OVER TEXT, TABLES AND IMAGES}
+	\item \href{https://arxiv.org/pdf/2105.07624.pdf}{TAT-QA: A Question Answering Benchmark on a Hybrid of Tabular and
+		Textual Content in Finance}
+\end{itemize}
+
+Evaluation
+\begin{itemize}
+	\item Augment test set in such a way that we scan each born digital document 
+	\item Build in procedure to evaluate for attribute resistance/robustness (scan/not; template/not)
+	\item generative models *could be* more robust to this, fixing OCR errors as it predicts; depends on pretraining task -> fix errors
+\end{itemize}
+
+\begin{enumerate}
+	\item Sources
+	\item How to annotate?
+	\item Establish plan
+	\item Exercise of creating some example annotations, understanding of complexity
+	
+\end{enumerate}
 
 
 \end{document}
