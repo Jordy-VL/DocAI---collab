@@ -4,10 +4,11 @@
 
 \input{preamble/preamble}
 
+
 \begin{document}
 
 \title{DocAI - collab: working document}
-\author{TBD}
+%\author{TBD}
 \date{June 2022}
 
 
@@ -26,9 +27,13 @@ Major challenges in DocAI include:
     \item business value lies in confidently and correctly predicting page classification - KIE - LIE; no standard evaluation methodology between providers
     \item absence of high-quality opensource datasets that extend to multi-page documents
     \begin{itemize}
-        \item requires sample-efficient to few-shot approaches for KIE under data sparsity 
+        \item requires sample-efficient to few-shot approaches for KIE under data scarcity 
     \end{itemize}
     \item current language modeling overly focused on unstructured wikipedia-like text (Commoncrawl only has <0.5\% pdfs)
+    \begin{itemize}
+        \item structured text contains entities which are not always retrievable by context; more by layout or relative positioning
+        \item could enhance input text with entity/pattern annotations \citep{paolini2021structured, qian-etal-2021-structural,ye2021pack}
+    \end{itemize}
 \end{enumerate}
 
 
@@ -74,56 +79,6 @@ General discussion on three ideas for papers.
     \end{itemize}
 \end{enumerate}
 
-\subsubsection{Calibration primer}
-
-%%https://arxiv.org/pdf/2102.10809.pdf
-\begin{definition}[Perfect calibration\small] \label{def:calibration}
-    \citep{dawid1982well,degroot1983comparison,zadrozny2002transforming}
-    Calibration is a property of an empirical predictor $f$, which states that on finite-sample data it converges to a solution where the scoring function reflects the probability $\rho$ of being correct. Perfect calibration, $\mathrm{CE}(f) = 0$, is satisfied if:
-    \begin{equation}
-        \mathbb{P}(Y=\hat{Y} \mid f(X)=\rho)=\rho, \quad \forall \rho \in[0,1]
-    \end{equation}
-\end{definition}
-
-For notational convenience, we indicate a ground truth class $y$ as an index in a pre-defined subset of classes, which when used as an index of $f(x)$, corresponds to a probability vector for class $y$.  
-
-\begin{definition}[\textit{Top-1 calibration}]
-    \label{def:1-calibration}
-\normalfont
-A model $f$ is said to be top-1-calibrated if, 
-\begin{equation}
-    \mathbb{P}(Y=\argmax_{k}^K f(X)_k \mid \max_{k}^K f(X)_k)= \max_{k}^K f(X)_k,
-\end{equation}
-almost surely.  
-\end{definition}
-
-\begin{definition}[\textit{Multi-task top-1 calibration}]
-    \label{def:mt-calibration}
-A set of $T$ models $F = \{f_{1}, ..., f_{T}\}$ is said to be \textit{jointly} top-1 calibrated if, 
-\begin{equation}
-    \mathbb{P}(Y=\argmax_{k}^K f(X)_k \mid \max_{k}^K f(X)_k)= \max_{k}^K f(X)_k \quad \forall f \in F,
-\end{equation}
-almost surely.  
-\end{definition}
-
-From \Cref{def:mt-calibration} we can define an empirical estimator, here the question becomes if discretization is shared over tasks or not.
-Intuitively, each $f$ can have predicted probabilities $\hat{p}$ concentrated in different regions of the simplex, so it would make sense to treat each separately.
-Would there be any gains in different discretization (histogram binning, spline, kernel)? The loss function can be similar to $\operatorname{MMCE}$ \citep{kumar2018trainable}. 
-
-First idea: play around with imbalance weighting within MMCE, since each $f$ can have different number of (expected) predictions and intrinsic correctness $N_f$.
-%1: incorrect
-%2: correct
-%3: different
-% logic: N_c/N to correct 
-
-\begin{align}
-    \widehat{\operatorname{MMCE}}^2_w(f,\kappa)
-    & = 
-    \sum_{\substack{c_i=c_j=0}}  \frac{\tilde{p}_i \tilde{p}_j \ \kappa(\tilde{p}_i,\tilde{p}_j)}{N_c^2} \\
-    &+ \sum_{\substack{c_i=c_j=1}}  \frac{ (1-\tilde{p}_i) (1-\tilde{p}_j) \ \kappa(\tilde{p}_i,\tilde{p}_j)}{(N - N_c)^2} \\
-    &- 2 \sum_{\substack{c_i=1 \\c_j=0}}  \frac{(1-\tilde{p}_i) \tilde{p}_j \ \kappa(\tilde{p}_i,\tilde{p}_j)}{(N_c N)} 
-\end{align}
-
 
 
 \subsection{24-06-2022}
@@ -137,6 +92,8 @@ II. Public EU data (\url{https://data.europa.eu/en} , \url{https://data.europa.e
 III. Patents (\url{https://patents.google.com/}) , check also (\url{https://machinelearning.inginf.units.it/data-and-tools/ghega-dataset})
 
 IV. Consumer product labels (Unilever or opensource: \url{https://world.openfoodfacts.org/})
+
+V. Pharmacy prescriptions
 
 \subsubsection{Actions}
 
